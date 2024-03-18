@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Twits
+from .models import Twit
 
-admin.site.register(Twits)
+admin.site.register(Twit)

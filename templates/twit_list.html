@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Twit List Page{% endblock title %}
+
+{% block body %}
+    {% for twit in twit_list %}
+        <div class="card" style="width: 80rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ twit.author }} |  {{ twit.date_of_birth }}</h5>
+                <h5 class="card-text">{{ twit.body }}</h5>
+                <p>
+                    <a class="btn btn-success" href="{% url "twit_detail" twit.pk %}">Inspect</a>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock body %}

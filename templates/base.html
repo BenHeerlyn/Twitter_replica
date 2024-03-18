@@ -1,3 +1,10 @@
+<!--
+    Benjamin Heerlyn
+    CIS218
+    2/13-28/24
+-->
+
+{% load static %}
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -16,7 +23,7 @@
 <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
+<!-- <link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json"> -->
 <link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#712cf9">
@@ -75,18 +82,12 @@
       }
     </style>
 
-    
-    <!-- Custom styles for this template -->
-    <link href="sticky-footer-navbar.css" rel="stylesheet">
-    
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
-    <link rel="stylesheet" href="{% static "css/base.css" %}">  
   </head>
     <body class="d-flex flex-column h-100">
     
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/">Y</a>
+            <a class="navbar-brand" href="/">Tweeter</a>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -108,7 +109,10 @@
             </div>
             {% if user.is_authenticated %}
             <div class="nav right">
-              <a class="btn btn-dark" href="{% url "logout" %}">Logout</a>
+                <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
             </div>
             {% else %}
               <div class="nav right">
