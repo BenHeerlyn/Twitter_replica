@@ -3,13 +3,16 @@
 {% block title %}Twit Detail Page{% endblock title %}
 
 {% block body %}
+    <h1><a class="btn btn-secondary" href="{% url "twit_list" %}">Back</a></h1>
     <div class="card" style="width: 80rem;">
         <div class="card-body">
-            <h5 class="card-title">{{ twit.author }} |  {{ twit.date_of_birth }}</h5>
+            <h5 class="card-title">{{ twit.author }} |  {{ twit.updated }}</h5>
             <h5 class="card-text">{{ twit.body }}</h5>
-            <p><a class="btn btn-success" href="{% url "twit_edit" twit.pk %}">Edit</a>
-            <a class="btn btn-danger" href="{% url "twit_delete" twit.pk %}">Delete</a></p>
+            {% if twit.author == user %}
+                <p><a class="btn btn-success" href="{% url "twit_edit" twit.pk %}">Edit</a>
+                <a class="btn btn-danger" href="{% url "twit_delete" twit.pk %}">Delete</a></p>
+            {% endif %}
         </div>
     </div>
-        <p><a class="btn btn-secondary" href="{% url "twit_list" %}">Back</a></p>
+        
 {% endblock body %}

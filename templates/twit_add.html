@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <p>
+        <h3>Create a Tweet</h3>
+    </p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-success ml-2" type="submit">Tweet</button>
+    </form>
+{% endblock body %}

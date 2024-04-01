@@ -16,7 +16,7 @@
     <title>Demo Hood · Bootstrap v5.2 - {% block title %}{% endblock title %}</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sticky-footer-navbar/">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
     <!-- Favicons -->
@@ -99,21 +99,14 @@
             >
                 <span class="navbar-toggle-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url "home" %}">Home</a>
-                    </li>
-                </ul>
 
-            </div>
             {% if user.is_authenticated %}
-            <div class="nav right">
-                <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">Logout</button>
-                </form>
-            </div>
+              <div class="nav nav-right">
+                  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                      {% csrf_token %}
+                      <button class="btn btn-secondary" type="submit">Logout</button>
+                  </form>
+              </div>
             {% else %}
               <div class="nav right">
                 <a class="btn btn-primary" href="{% url "login" %}">Login</a>
@@ -137,7 +130,10 @@
     </footer>
 
 
-    <sript src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS bundle -->
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
       
   </body>

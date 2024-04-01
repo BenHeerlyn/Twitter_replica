@@ -3,14 +3,47 @@
 {% block title %}Twit List Page{% endblock title %}
 
 {% block body %}
+    <div>
+        <h1>
+            <a href="{% url "twit_add" %}" class="btn btn-primary">Make a Twit</a>
+        </h1>
+    </div>
     {% for twit in twit_list %}
         <div class="card" style="width: 80rem;">
+            <div class="card-header">
+                <h5 class="card-title">{{ twit.author }} |  {{ twit.updated }}</h5>
+            </div>
             <div class="card-body">
-                <h5 class="card-title">{{ twit.author }} |  {{ twit.date_of_birth }}</h5>
                 <h5 class="card-text">{{ twit.body }}</h5>
+                <p>
+                    {% with user_likes=twit.likes.all %}
+                        <button 
+                            data-id="{{ twit.id }}"
+                            data-action="{% if user in user_likes %}un{% endif %}like"
+                            data-like-url="{{ twit.get_like_url }}"
+                            class="like_button btn btn-{% if user not in user_likes %}outline-{% endif %}primary"
+                        >
+                            <1 class="like_icon bi-hand-thumbs-up{% if user in user_likes %}-fill{% endif %}"></i>
+                                <span class="like_count">{{ user_likes|length }}</span>
+                                like(s)
+                        </button>
+                    {% endwith %}
+                </p>
+                {% if twit.author == user %}
                 <p>
                     <a class="btn btn-success" href="{% url "twit_detail" twit.pk %}">Inspect</a>
                 </p>
+                {% endif %}
+                <div class="card-footer text-center text-muted">
+                    {% for comment in twit.comment_set.all %}
+                    <p>
+                        <span class="font-weight-bold">
+                        {{ comment.author }}
+                        </span>
+                        {{ comment.comment }}
+                    </p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     {% endfor %}

@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}
+{% load crispy_forms_tags %}
+
+{% block body %}
     <h1>Edit</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button class="btn btn-info ml-2" type="submit">Update</button>
+        <a href="{% url "twit_detail" twit.pk %}" class="btn btn-secondary">Back</a>
     </form>
-{% endblock title %}
+{% endblock body %}
