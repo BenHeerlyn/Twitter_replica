@@ -9,11 +9,12 @@ from .models import Private
 class SignUpView(CreateView):
     """SignUp view"""
     form_class = CustomUserCreateForm
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
 
 class PrivateProfileView(View):
-    """Twit Detail View"""
+    """Private Profile View"""
+
     def get(self,request, *args, **kwargs):
         """Doing a request"""
         view = PrivateGetView.as_view()
@@ -25,7 +26,7 @@ class PrivateProfileView(View):
         return view(request, *args, **kwargs)
 
 class PrivatePostView(FormView):
-    """Comment Post View"""
+    """Private Profile View"""
     model =Private
     template_name = "private_profile.html"
     form_class = CustomUserChangeForm
@@ -41,8 +42,7 @@ class PrivatePostView(FormView):
         # as we don't want the form to actually save to the database yet
         private = form.save(commit=False)
 
-        # Attatch the user to the post user
-        private.author = self.request.user
+        private.author = self.object
 
         # save the comment instance to the database
         private.save()
@@ -50,7 +50,7 @@ class PrivatePostView(FormView):
         return super().form_valid(form)
     
 class PrivateGetView(DetailView):
-    """Comment Get View"""
+    """Private Profile View"""
     model = Private
     template_name = "private_profile.html"
 

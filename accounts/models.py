@@ -12,6 +12,7 @@ class Private(models.Model):
     
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
