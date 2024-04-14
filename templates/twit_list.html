@@ -3,15 +3,14 @@
 {% block title %}Twit List Page{% endblock title %}
 
 {% block body %}
-    <div>
-        <h1>
-            <a href="{% url "twit_add" %}" class="btn btn-primary">Make a Twit</a>
-        </h1>
-    </div>
+    <h1>
+        Welcome to Tweeter
+    </h1>
+    <p></p>
     {% for twit in twit_list %}
         <div class="card" style="width: 80rem;">
             <div class="card-header">
-                <h5 class="card-title">{{ twit.author }} |  {{ twit.updated }}</h5>
+                <h5 class="card-title"><a href="#">{{ twit.author }}</a> |  {{ twit.updated }}</h5>
             </div>
             <div class="card-body">
                 <h5 class="card-text">{{ twit.body }}</h5>
@@ -29,11 +28,10 @@
                         </button>
                     {% endwith %}
                 </p>
-                {% if twit.author == user %}
                 <p>
                     <a class="btn btn-success" href="{% url "twit_detail" twit.pk %}">Inspect</a>
                 </p>
-                {% endif %}
+
                 <div class="card-footer text-center text-muted">
                     {% for comment in twit.comment_set.all %}
                     <p>
@@ -46,5 +44,6 @@
                 </div>
             </div>
         </div>
+        <hr>
     {% endfor %}
 {% endblock body %}

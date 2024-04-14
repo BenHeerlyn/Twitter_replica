@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, FormView
-from .models import Twit
+from .models import Twit, Comment
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.detail import SingleObjectMixin
@@ -19,6 +19,11 @@ class TwitDetailView(LoginRequiredMixin, View):
         """Doing a request"""
         view = CommentGetView.as_view()
         return view(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        """Doing Post request"""
+        view = CommentPostView.as_view()
+        return view(request, *args, **kwargs)
 
 class CommentGetView(DetailView):
     """Comment Get View"""
@@ -27,13 +32,13 @@ class CommentGetView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["forms"] = CommentForm()
+        context["form"] = CommentForm()
         return context
 
 class CommentPostView(SingleObjectMixin, FormView):
     """Comment Post View"""
     model = Twit
-    template_name = "twit_detail"
+    template_name = "twit_detail.html"
     form_class = CommentForm
 
     def post(self, request, *args, **kwargs):
@@ -47,7 +52,7 @@ class CommentPostView(SingleObjectMixin, FormView):
         # as we don't want the form to actually save to the database yet
         comment = form.save(commit=False)
 
-        # Attach the twit to the new comment
+        # Attach the twit to the new comment.
         comment.twit = self.object
 
         # Attatch the user to the post user
@@ -121,3 +126,25 @@ class TwitLikeView(LoginRequiredMixin, View):
             }
         )
 
+# class CommentCreateView(LoginRequiredMixin, CreateView):
+#     """Allows a User to create a comment under a Twit of their choosing"""
+
+#     model = Comment
+#     template_name = "comment_create.html"
+#     fields = (
+#         "comment",
+#     )
+
+#     def form_valid(self, form):
+#         """Create new comment when form is valid"""
+#         # Get the comment instance by saving the form, but set commit to false
+#         # as we don't want the form to actually save to the database yet
+#         comment = form.save(commit=False)
+
+#         # Attatch the user to the post user
+#         comment.author = self.request.user
+
+#         # save the comment instance to the database
+#         comment.save()
+
+#         return super().form_valid(form)

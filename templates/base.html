@@ -80,47 +80,65 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+
+      .container {
+        padding: 60px 15px 0;
+      }
     </style>
 
   </head>
     <body class="d-flex flex-column h-100">
     
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/">Tweeter</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarCollapse"
-                aria-controls="navbarCollapse"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggle-icon"></span>
-            </button>
-
-            {% if user.is_authenticated %}
-              <div class="nav nav-right">
-                  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
-                      {% csrf_token %}
-                      <button class="btn btn-secondary" type="submit">Logout</button>
-                  </form>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/"> Tweeter</a>
+            <div class="navbar-collapse collapse" id="navbarCollapse">
+              <ul class="navbar-nav me-auto mb-2 mb-md-0"></ul>
+              {% if user.is_authenticated %}
+              <div class="dropdown text-end">
+                <a 
+                  href=""
+                  class="link-light text-decorated-none dropdown-toggle"
+                  id="dropdownUser1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ user.username }}
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li>
+                        <a class="dropdown-item" href="{% url "private_profile" admin.user.pk %}">
+                        Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url "password_change" %}">
+                        Change Password
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url "logout" %}">
+                        Logout
+                        </a>
+                    </li>
+                </ul>
               </div>
+              <li><a href="{% url "twit_add" %}" class="btn btn-primary">+ New Tweet</a></li>
             {% else %}
-              <div class="nav right">
+              <div class="nav nav-right">
                 <a class="btn btn-primary" href="{% url "login" %}">Login</a>
                 <a class="btn btn-secondary" href="{% url "signup" %}">Sign up</a>
               </div>
             {% endif %}
-        </nav>
+        </div>
+      </nav>
     </header>
 
 <!-- Begin page content -->
     <main class="flex-shrink-0">
-        <div class="container">
-            <h1 class="mt-5">{% block body %}{% endblock body %}</h1>
-        </div>
+      <div class="container">
+        {% block body %}{% endblock body %}
+      </div>
     </main>
 
     <footer class="footer mt-auto py-3 bg-light">

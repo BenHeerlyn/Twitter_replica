@@ -34,7 +34,9 @@ class Twit(models.Model):
     
 class Comment(models.Model):
     """Comment Class"""
+
     comment = models.CharField(max_length=100)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)
 
@@ -42,6 +44,7 @@ class Comment(models.Model):
         Twit,
         on_delete = models.CASCADE,
     )
+    
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
