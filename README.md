@@ -2,7 +2,7 @@
 
 ## Author
 
-
+# Benjamin Heerlyn
 
 ## Description
 
@@ -121,7 +121,8 @@ https://getbootstrap.com/docs/4.0/getting-started/introduction/
 
 ## Outside Resources Used
 
-
+# https://www.w3schools.com/css/css3_images.asp
 
 ## Known Problems, Issues, And/Or Errors in the Program
 
+# No known Issures, Problems, or Errors

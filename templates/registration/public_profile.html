@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% comment %} 
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
+{% endcomment %}
+
+{% block body %}
+    <h1>Public Profile</h1>
+    <h4>{{ customuser.first_name }} {{ customuser.last_name }}</h4>
+    <h6>{{ customuser.date_of_birth }} | {{ customuser.email }}</h6>
+    <hr>
+    <h2>Tweets made by this user:</h2>
+    {% for twit in customuser.twit_author.all %}
+        <div class="card" style="width: 80rem;">
+            <div class="card-header">
+                <h5 class="card-title">{{ twit.author }} |  {{ twit.updated }}</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-text">{{ twit.body }}</h5>
+                {% if twit.image != None %}
+                    <img src="{{ twit.image }}" style="width:200px">
+                {% endif %}
+                <p></p>
+            </div>
+        </div>
+        <p></p>
+    {% endfor %}
+{% endblock body %}

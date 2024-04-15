@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% comment %} 
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
+{% endcomment %}
+
 {% block title %}Twit Detail Page{% endblock title %}
+
 
 {% block body %}
     <h1><a class="btn btn-secondary" href="{% url "twit_list" %}">Back</a></h1>
@@ -9,6 +16,10 @@
         <div class="card-body">
             <h5 class="card-title">{{ twit.author }} |  {{ twit.updated }}</h5>
             <h5 class="card-text">{{ twit.body }}</h5>
+            {% if twit.image != None %}
+            <img src="{{ twit.image }}" style="width:200px">
+            {% endif %}
+            <p></p>
             {% if twit.author == user %}
                 <p><a class="btn btn-success" href="{% url "twit_edit" twit.pk %}">Edit</a>
                 <a class="btn btn-danger" href="{% url "twit_delete" twit.pk %}">Delete</a></p>

@@ -2,6 +2,10 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import CustomUser
 
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
+
 class CustomUserCreateForm(UserCreationForm):
     """Custom User Create Form"""
     class Meta(UserCreationForm):

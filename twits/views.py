@@ -8,6 +8,10 @@ from django.views import View
 from django.http import JsonResponse
 from .forms import CommentForm
 
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
+
 class TwitListView(LoginRequiredMixin, ListView):
     """Twit List View"""
     model = Twit
@@ -72,6 +76,7 @@ class TwitUpdateView(LoginRequiredMixin, UpdateView):
     model = Twit
     fields = (
         "body",
+        "image",
     )
     template_name = "twit_edit.html"
 
@@ -95,6 +100,7 @@ class TwitCreateView(LoginRequiredMixin, CreateView):
     template_name = "twit_add.html"
     fields = (
         "body",
+        "image",
     )
 
     def form_valid(self, form):
@@ -125,26 +131,3 @@ class TwitLikeView(LoginRequiredMixin, View):
                 "success": True,
             }
         )
-
-# class CommentCreateView(LoginRequiredMixin, CreateView):
-#     """Allows a User to create a comment under a Twit of their choosing"""
-
-#     model = Comment
-#     template_name = "comment_create.html"
-#     fields = (
-#         "comment",
-#     )
-
-#     def form_valid(self, form):
-#         """Create new comment when form is valid"""
-#         # Get the comment instance by saving the form, but set commit to false
-#         # as we don't want the form to actually save to the database yet
-#         comment = form.save(commit=False)
-
-#         # Attatch the user to the post user
-#         comment.author = self.request.user
-
-#         # save the comment instance to the database
-#         comment.save()
-
-#         return super().form_valid(form)

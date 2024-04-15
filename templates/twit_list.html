@@ -2,6 +2,11 @@
 
 {% block title %}Twit List Page{% endblock title %}
 
+{% comment %} 
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
+{% endcomment %}
 {% block body %}
     <h1>
         Welcome to Tweeter
@@ -10,10 +15,14 @@
     {% for twit in twit_list %}
         <div class="card" style="width: 80rem;">
             <div class="card-header">
-                <h5 class="card-title"><a href="#">{{ twit.author }}</a> |  {{ twit.updated }}</h5>
+                <h5 class="card-title"><a href="{% url "public_profile" twit.author.pk %}">{{ twit.author }}</a> |  {{ twit.updated }}</h5>
             </div>
             <div class="card-body">
                 <h5 class="card-text">{{ twit.body }}</h5>
+                {% if twit.image != None %}
+                <img src="{{ twit.image }}" style="width:200px">
+                {% endif %}
+                <p></p>
                 <p>
                     {% with user_likes=twit.likes.all %}
                         <button 

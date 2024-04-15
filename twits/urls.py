@@ -8,6 +8,10 @@ from .views import (
     )
 from django.urls import path
 
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
+
 urlpatterns = [
     path("<int:pk>/", TwitDetailView.as_view(), name="twit_detail"),
     path("<int:pk>/edit/", TwitUpdateView.as_view(), name="twit_edit"),

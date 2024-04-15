@@ -2,9 +2,14 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView, DetailView, View
+from django.views.generic import CreateView, UpdateView, DetailView
 from .forms import CustomUserCreateForm, CustomUserChangeForm
-from .models import Private
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import CustomUser
+
+# Benjamin Heerlyn
+# CIS218
+# 4/15/2024
 
 class SignUpView(CreateView):
     """SignUp view"""
@@ -12,49 +17,18 @@ class SignUpView(CreateView):
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
 
-class PrivateProfileView(View):
+class PrivateProfileView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """Private Profile View"""
-
-    def get(self,request, *args, **kwargs):
-        """Doing a request"""
-        view = PrivateGetView.as_view()
-        return view(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        """Doing Post request"""
-        view = PrivatePostView.as_view()
-        return view(request, *args, **kwargs)
-
-class PrivatePostView(FormView):
-    """Private Profile View"""
-    model =Private
-    template_name = "private_profile.html"
+    model = CustomUser
     form_class = CustomUserChangeForm
+    success_url = reverse_lazy("twit_list")
+    template_name = "registration/private_profile.html"
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
+    def test_func(self):
+        obj = self.get_object()
+        return obj == self.request.user
 
-        return super().post(request, *args, **kwargs)
-    
-    def form_valid(self, form):
-        """Create new comment when form is valid"""
-        # Get the comment instance by saving the form, but set commit to false
-        # as we don't want the form to actually save to the database yet
-        private = form.save(commit=False)
-
-        private.author = self.object
-
-        # save the comment instance to the database
-        private.save()
-
-        return super().form_valid(form)
-    
-class PrivateGetView(DetailView):
-    """Private Profile View"""
-    model = Private
-    template_name = "private_profile.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["form"] = CustomUserChangeForm()
-        return context
+class PublicProfileView(DetailView):
+    """A profile that displays a user's every post, but also some info about them"""
+    model = CustomUser
+    template_name = "registration/public_profile.html"
